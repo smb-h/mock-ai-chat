@@ -1,2 +1,2 @@
-from .item import Item
-from .user import User
+from .interaction import Interaction  # noqa
+from .user import User  # noqa

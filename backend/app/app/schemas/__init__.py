@@ -1,4 +1,7 @@
-from .item import Item, ItemCreate, ItemInDB, ItemUpdate
-from .msg import Msg
-from .token import Token, TokenPayload
-from .user import User, UserCreate, UserInDB, UserUpdate
+from .interaction import Interaction  # noqa
+from .interaction import InteractionCreate  # noqa
+from .interaction import InteractionInDB  # noqa
+from .interaction import InteractionUpdate  # noqa
+from .msg import Msg  # noqa
+from .token import Token, TokenPayload  # noqa
+from .user import User, UserCreate, UserInDB, UserUpdate  # noqa

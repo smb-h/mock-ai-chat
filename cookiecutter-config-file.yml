@@ -24,6 +24,5 @@ default_context:
   sentry_dsn: ''
   docker_image_prefix: ''
   docker_image_backend: 'backend'
-  docker_image_celeryworker: 'celeryworker'
   _copy_without_render: [backend/app/app/email-templates/**]
   _template: ./

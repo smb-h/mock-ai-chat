@@ -25,8 +25,6 @@ Alternative automatic documentation with ReDoc (from the OpenAPI backend): http:
 
 PGAdmin, PostgreSQL web administration: http://localhost:5050
 
-Flower, administration of Celery tasks: http://localhost:5555
-
 Traefik UI, to see how the routes are being handled by the proxy: http://localhost:8090
 
 **Note**: The first time you start your stack, it might take a minute for it to be ready. While the backend waits for the database to be ready and configures everything. You can check the logs to monitor it.
@@ -66,10 +64,6 @@ $ poetry shell
 Next, open your editor at `./backend/app/` (instead of the project root: `./`), so that you see an `./app/` directory with your code inside. That way, your editor will be able to find all the imports, etc. Make sure your editor uses the environment you just created with Poetry.
 
 Modify or add SQLAlchemy models in `./backend/app/app/models/`, Pydantic schemas in `./backend/app/app/schemas/`, API endpoints in `./backend/app/app/api/`, CRUD (Create, Read, Update, Delete) utils in `./backend/app/app/crud/`. The easiest might be to copy the ones for Items (models, endpoints, and CRUD utils) and update them to your needs.
-
-Add and modify tasks to the Celery worker in `./backend/app/app/worker.py`.
-
-If you need to install any additional package to the worker, add it to the file `./backend/app/celeryworker.dockerfile`.
 
 ### Docker Compose Override
 
@@ -702,32 +696,3 @@ PGAdmin: http://localhost.tiangolo.com:5050
 Flower: http://localhost.tiangolo.com:5555
 
 Traefik UI: http://localhost.tiangolo.com:8090
-
-## Project generation and updating, or re-generating
-
-This project was generated using https://github.com/tiangolo/full-stack-fastapi-postgresql with:
-
-```bash
-pip install cookiecutter
-cookiecutter https://github.com/tiangolo/full-stack-fastapi-postgresql
-```
-
-You can check the variables used during generation in the file `cookiecutter-config-file.yml`.
-
-You can generate the project again with the same configurations used the first time.
-
-That would be useful if, for example, the project generator (`tiangolo/full-stack-fastapi-postgresql`) was updated and you wanted to integrate or review the changes.
-
-You could generate a new project with the same configurations as this one in a parallel directory. And compare the differences between the two, without having to overwrite your current code but being able to use the same variables used for your current project.
-
-To achieve that, the generated project includes the file `cookiecutter-config-file.yml` with the current variables used.
-
-You can use that file while generating a new project to reuse all those variables.
-
-For example, run:
-
-```console
-$ cookiecutter --config-file ./cookiecutter-config-file.yml --output-dir ../project-copy https://github.com/tiangolo/full-stack-fastapi-postgresql
-```
-
-That will use the file `cookiecutter-config-file.yml` in the current directory (in this project) to generate a new project inside a sibling directory `project-copy`.
