@@ -48,7 +48,7 @@ def create_interaction(
 def update_interaction(
     *,
     db: Session = Depends(deps.get_db),
-    id: int,
+    id: str,
     interaction_in: schemas.InteractionUpdate,
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
@@ -72,7 +72,7 @@ def update_interaction(
 def read_interaction(
     *,
     db: Session = Depends(deps.get_db),
-    id: int,
+    id: str,
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
@@ -92,7 +92,7 @@ def read_interaction(
 def delete_interaction(
     *,
     db: Session = Depends(deps.get_db),
-    id: int,
+    id: str,
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """

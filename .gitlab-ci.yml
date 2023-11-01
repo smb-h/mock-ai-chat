@@ -12,7 +12,7 @@ stages:
 
 precommit:
   stage: lint
-  image: python:3.10
+  image: python:3.11
   variables:
     PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
   cache:
@@ -25,7 +25,7 @@ precommit:
 
 pytest:
   stage: test
-  image: python:3.10
+  image: python:3.11
   before_script:
     - pip install -r requirements/prod.txt
   script:

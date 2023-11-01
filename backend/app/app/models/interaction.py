@@ -10,9 +10,9 @@ if TYPE_CHECKING:
 
 
 class Interaction(Base):
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True)
     prompt = Column(String, index=True)
-    model_name = Column(String)
+    agent = Column(String)
     role = Column(String)
     owner_id = Column(Integer, ForeignKey("user.id"))
     owner = relationship("User", back_populates="interactions")

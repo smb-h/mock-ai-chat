@@ -1,14 +1,8 @@
 import secrets
 from typing import Any
 
-from pydantic import (
-    AnyHttpUrl,
-    BaseSettings,
-    EmailStr,
-    HttpUrl,
-    PostgresDsn,
-    validator,
-)
+from pydantic import AnyHttpUrl, EmailStr, HttpUrl, validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -45,7 +39,8 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
-    SQLALCHEMY_DATABASE_URI: PostgresDsn | None = None
+    # SQLALCHEMY_DATABASE_URI: PostgresDsn | None = None
+    SQLALCHEMY_DATABASE_URI: str | None = None
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(
@@ -53,12 +48,18 @@ class Settings(BaseSettings):
     ) -> Any:
         if isinstance(v, str):
             return v
-        return PostgresDsn.build(
-            scheme="postgresql",
-            user=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
-            path=f"/{values.get('POSTGRES_DB') or ''}",
+        # return PostgresDsn.build(
+        #     scheme="postgresql",
+        #     user=values.get("POSTGRES_USER"),
+        #     password=values.get("POSTGRES_PASSWORD"),
+        #     host=values.get("POSTGRES_SERVER"),
+        #     path=f"/{values.get('POSTGRES_DB') or ''}",
+        # )
+        return (
+            f"postgresql://{values.get('POSTGRES_USER')}:"
+            + f"{values.get('POSTGRES_PASSWORD')}@"
+            + f"{values.get('POSTGRES_SERVER')}/"
+            + f"{values.get('POSTGRES_DB') or ''}"
         )
 
     SMTP_TLS: bool = True

@@ -1,5 +1,8 @@
 # from typing import List
 
+import hashlib
+from datetime import datetime
+
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
@@ -16,6 +19,13 @@ class CRUDInteraction(
     ) -> Interaction:
         obj_in_data = jsonable_encoder(obj_in)
         db_obj = self.model(**obj_in_data, owner_id=owner_id)
+        db_obj.created_at = datetime.now()
+        db_obj.updated_at = datetime.now()
+        db_obj.id = hashlib.sha256(
+            f"{db_obj.prompt}{db_obj.agent}{db_obj.role}"
+            + f"{db_obj.owner_id}{db_obj.created_at}"
+            + f"{db_obj.updated_at}".encode()
+        ).hexdigest()
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)

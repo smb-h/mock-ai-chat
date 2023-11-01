@@ -1,5 +1,3 @@
-# from typing import Optional
-
 from pydantic import BaseModel, EmailStr
 
 
@@ -26,7 +24,7 @@ class UserInDBBase(UserBase):
     id: int | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Additional properties to return via API
