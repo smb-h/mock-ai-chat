@@ -1,21 +1,21 @@
 # from typing import Optional
 from datetime import datetime
 
-from pydantic import BaseModel, field_serializer
+from pydantic import BaseModel, Field
+
+from .msg import Msg
 
 
 # Shared properties
 class InteractionBase(BaseModel):
-    prompt: str | None = None
-    agent: str | None = None
-    role: str | None = None
+    prompt: str
+    agent: str
+    role: str
 
 
 # Properties to receive on Interaction creation
 class InteractionCreate(InteractionBase):
-    prompt: str
-    agent: str
-    role: str
+    pass
 
 
 # Properties to receive on Interaction update
@@ -26,10 +26,7 @@ class InteractionUpdate(InteractionBase):
 # Properties shared by models stored in DB
 class InteractionInDBBase(InteractionBase):
     id: str
-    prompt: str
     owner_id: int
-    agent: str
-    role: str
     created_at: datetime
     updated_at: datetime
 
@@ -39,12 +36,22 @@ class InteractionInDBBase(InteractionBase):
 
 # Properties to return to client
 class Interaction(InteractionInDBBase):
-    messages: list[dict] = []
-    settings: dict = {}
+    # prompt: str = Field(..., exclude=True)
+    agent: str = Field(..., serialization_alias="model_name")
+    # role: str = Field(..., exclude=True)
+    owner_id: int = Field(..., exclude=True)
+    msgs: list[Msg] = Field(default=[], serialization_alias="messages")
 
-    @field_serializer("settings")
-    def serialize_settings(self, v):
-        return {}
+    # @property
+    # def settings(self):
+    #     return {
+    #         "prompt": self.prompt,
+    #         "agent": self.agent,
+    #         "role": self.role,
+    #     }
+
+    class Config:
+        from_attributes = True
 
 
 # Properties properties stored in DB

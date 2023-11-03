@@ -11,8 +11,9 @@ if TYPE_CHECKING:
 
 class Msg(Base):
     id = Column(String, primary_key=True, index=True)
-    interaction = relationship("Interaction", back_populates="msgs")
     interaction_id = Column(String, ForeignKey("interaction.id"))
-    created_at = Column(String)
+    interaction = relationship("Interaction", back_populates="msgs")
     role = Column(String)
     content = Column(String)
+    created_at = Column(String)
+    updated_at = Column(String)

@@ -1,8 +1,8 @@
 """Update schema
 
-Revision ID: f266445d8223
+Revision ID: 4a1ca369783c
 Revises: d4867f3a4c0a
-Create Date: 2023-11-01 13:54:10.136248
+Create Date: 2023-11-03 17:12:29.020910
 
 """
 import sqlalchemy as sa
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "f266445d8223"
+revision = "4a1ca369783c"
 down_revision = "d4867f3a4c0a"
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade():
         "interaction",
         sa.Column("id", sa.String(), nullable=False),
         sa.Column("prompt", sa.String(), nullable=True),
-        sa.Column("model_name", sa.String(), nullable=True),
+        sa.Column("agent", sa.String(), nullable=True),
         sa.Column("role", sa.String(), nullable=True),
         sa.Column("owner_id", sa.Integer(), nullable=True),
         sa.Column("created_at", sa.String(), nullable=True),
@@ -35,9 +35,6 @@ def upgrade():
     )
     op.create_index(
         op.f("ix_interaction_id"), "interaction", ["id"], unique=False
-    )
-    op.create_index(
-        op.f("ix_interaction_prompt"), "interaction", ["prompt"], unique=False
     )
     op.drop_index("ix_item_description", table_name="item")
     op.drop_index("ix_item_id", table_name="item")
@@ -78,7 +75,6 @@ def downgrade():
     op.create_index(
         "ix_item_description", "item", ["description"], unique=False
     )
-    op.drop_index(op.f("ix_interaction_prompt"), table_name="interaction")
     op.drop_index(op.f("ix_interaction_id"), table_name="interaction")
     op.drop_table("interaction")
     # ### end Alembic commands ###
