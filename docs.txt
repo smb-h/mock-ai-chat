@@ -1,0 +1,10 @@
+# TODO:
+Write tests for Interaction
+Write tests for Message
+
+Delete related messages to an interaction in 1 query
+Rename agent and model_name to 1 word
+Fix updateed fields on update action (which don't exist now)
+Start prompts by AI and Answering by role
+Create function for AI response
+Settings field in interaction
