@@ -1,6 +1,8 @@
 # TODO:
 Write tests for Interaction
 Write tests for Message
+Check API documentation
+Check Code documentation
 
 Delete related messages to an interaction in 1 query
 Rename agent and model_name to 1 word
